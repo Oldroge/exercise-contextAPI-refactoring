@@ -1,14 +1,19 @@
 // src/Cars.jsx
 
-import PropTypes from 'prop-types';
-import React from 'react';
-import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+// import { connect } from 'react-redux';
 import carBlue from './images/carBlue.jpeg';
 import carRed from './images/carRed.jpeg';
 import carYellow from './images/carYellow.jpeg';
-import { moveCar } from './redux/actionCreators';
+// import { moveCar } from './redux/actionCreators';
+import Context from './Context';
 
-function Cars({ redCar, blueCar, yellowCar, moveCar }) {
+class Cars extends Component {
+  render() {
+    const { redCar, blueCar, yellowCar } = this.context.cars;
+    console.log(redCar);
+    const { moveCar } = this.context;
   return (
     <div>
       <div>
@@ -18,7 +23,7 @@ function Cars({ redCar, blueCar, yellowCar, moveCar }) {
           alt="red car"
         />
         <button
-          onClick={() => moveCar('red', !redCar)}
+          onClick={() => moveCar('redCar', !redCar)}
           type="button"
         >
           Move
@@ -31,7 +36,7 @@ function Cars({ redCar, blueCar, yellowCar, moveCar }) {
           alt="blue car"
         />
         <button
-          onClick={() => moveCar('blue', !blueCar)}
+          onClick={() => moveCar('blueCar', !blueCar)}
           type="button"
         >
           Move
@@ -44,7 +49,7 @@ function Cars({ redCar, blueCar, yellowCar, moveCar }) {
           alt="yellow car"
         />
         <button
-          onClick={() => moveCar('yellow', !yellowCar)}
+          onClick={() => moveCar('yellowCar', !yellowCar)}
           type="button"
         >
           Move
@@ -53,19 +58,14 @@ function Cars({ redCar, blueCar, yellowCar, moveCar }) {
     </div>
   );
 }
+}
 
-Cars.propTypes = {
-  moveCar: PropTypes.func.isRequired,
-  blueCar: PropTypes.bool.isRequired,
-  redCar: PropTypes.bool.isRequired,
-  yellowCar: PropTypes.bool.isRequired,
-};
+// const mapStateToProps = (state) => ({
+//   redCar: state.carReducer.cars.red,
+//   blueCar: state.carReducer.cars.blue,
+//   yellowCar: state.carReducer.cars.yellow});
 
-const mapStateToProps = (state) => ({
-  redCar: state.carReducer.cars.red,
-  blueCar: state.carReducer.cars.blue,
-  yellowCar: state.carReducer.cars.yellow});
+// const mapDispatchToProps = { moveCar };
 
-const mapDispatchToProps = { moveCar };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cars);
+Cars.contextType = Context;
+export default Cars;
